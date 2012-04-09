@@ -30,14 +30,26 @@ function window-number(){
   fi
 }
 
-function split(){
+function pane(){
   if [ -z $PANE ]; then
     cmd cd \"$DEFAULT_PATH\"
     PANE=1;
   else
     tmux-cmd-onload splitw
-    tmux-cmd-onload select-layout "tiled"
+    tiled-layout
   fi
+}
+
+function tiled-layout(){
+  tmux-cmd-onload select-layout "tiled"
+}
+
+function horizontal-layout(){
+  tmux-cmd-onload select-layout "even-horizontal"
+}
+
+function vertical-layout(){
+  tmux-cmd-onload select-layout "even-vertical"
 }
 
 function cmd(){
