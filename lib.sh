@@ -6,10 +6,12 @@ tmunix - tmux manager
 HELP
 }
 
+
 # Runs the tmux command at every run of the config file
 function tmux-cmd(){
   tmux "$@"
 }
+
 
 # Runs the tmux command only if the window is being prepared
 # for the first time.
@@ -19,40 +21,55 @@ function tmux-cmd-onload(){
   fi
 }
 
-function default-path(){
-  DEFAULT_PATH="$1"
-  tmux-cmd set-option default-path "$1"
-}
 
-function window-number(){
-  if [ -z $WIN_NUMBER ]; then
-    WIN_NUMBER=$1
-  fi
-}
-
-function pane(){
-  if [ -z $PANE ]; then
-    cmd cd \"$DEFAULT_PATH\"
-    PANE=1;
+function tx-find-window(){
+  ACTIVE_WINDOW=`tmux-cmd list-windows | grep "^[0-9]*: $WINDOW" -m1`
+  if [ $? -eq 0 ]; then
+    CUR_WIN_NUMBER=`echo "$ACTIVE_WINDOW" | awk -F : '{print $1}'`
+    return 0;
   else
-    tmux-cmd-onload splitw
-    tiled-layout
+    return 1;
   fi
 }
 
-function tiled-layout(){
-  tmux-cmd-onload select-layout "tiled"
+
+function tx-init-window(){
+  if [ -z "$TMUX" ]; then
+    if tmux-cmd has-session -t "$SESSION_NAME"; then
+      # we make the target session the current one
+      # (so that it's used by default)
+      tmux-cmd attach -t "$SESSION_NAME" \; detach
+    else
+      tmux-cmd start-server \; set-option -g base-index 1 \; new-session -d -s "$SESSION_NAME"
+    fi
+  fi
+  if ! tx-find-window; then
+    if [[ "$USE_THIS_WINDOW" -eq 1 ]]; then
+      tmux-cmd rename-window "$WINDOW"
+    else
+      tmux-cmd new-window -n "$WINDOW"
+    fi
+    FIRST_RUN=true
+  else
+    tmux-cmd select-window -t $CUR_WIN_NUMBER
+  fi
+
+  tx-find-window
+  source "$CONFIG_FILE"
 }
 
-function horizontal-layout(){
-  tmux-cmd-onload select-layout "even-horizontal"
+
+function tx-attach(){
+  if [ -z $TMUX ]; then
+    tmux-cmd -u attach-session -t "$SESSION_NAME"
+  fi
 }
 
-function vertical-layout(){
-  tmux-cmd-onload select-layout "even-vertical"
-}
 
-function cmd(){
-  tmux-cmd-onload send-keys "$*" C-m
+function tx-set-win-number(){
+  if ! [ -z $WIN_NUMBER ] && [ $WIN_NUMBER -ne $CUR_WIN_NUMBER ]; then
+    tmux-cmd move-window -t $WIN_NUMBER || tmux-cmd swap-window -t $WIN_NUMBER
+  fi
+  tx-find-window
 }
 
