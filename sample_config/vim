@@ -1,0 +1,6 @@
+#!/bin/env bash
+
+default-path "`pwd`"
+
+pane
+cmd vim

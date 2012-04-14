@@ -1,0 +1,12 @@
+#!/bin/env bash
+
+default-path ~/Projects/MyProject
+
+window-number 1
+
+pane
+cmd vim README
+pane
+pane
+pane
+cmd su -

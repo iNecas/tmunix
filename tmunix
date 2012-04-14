@@ -1,5 +1,9 @@
 #!/bin/env bash
 
+SCRIPT_DIR=$(dirname $(readlink -f $BASH_SOURCE))
+source "$SCRIPT_DIR/lib.sh"
+source "$SCRIPT_DIR/dsl.sh"
+
 while getopts "dthw:n:c:" opt; do
   case $opt in
     w)
@@ -34,7 +38,6 @@ if [ -z $WINDOW ]; then
   exit 1
 fi
 
-SCRIPT_DIR=$(dirname $(readlink -f $BASH_SOURCE))
 CONFIG_DIR=~/.tmunix
 
 if [ -z "$CONFIG" ]; then
@@ -51,9 +54,6 @@ if ! [[ -e "$CONFIG_FILE" ]]; then
   echo "$CONFIG_FILE not found"
   exit 2
 fi
-
-source "$SCRIPT_DIR/lib.sh"
-source "$SCRIPT_DIR/dsl.sh"
 
 
 SESSION_NAME=tmunix

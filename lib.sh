@@ -2,7 +2,19 @@
 
 function usage(){
   cat <<HELP
-tmunix - tmux manager
+tmunix - tmux window manager
+
+Usage:
+tmunix [options]
+  -w WINDOW_NAME   - windows name (required)
+  -n WINDOW_NUMBER - number the window should be on
+  -t               - use this window instead of creating new
+  -c CONFIG_FILE   - profile file to be used for setting up the window. The
+                     file is searched in ~/.tmunix directory and it's an ordinary bash file.
+                     If not defined WINDOW_NAME will be used. If the file is not found
+                     default profile is used. See README.md for more details.
+  -d               - don't attach to the window after initializing
+  -h               - show this message
 HELP
 }
 

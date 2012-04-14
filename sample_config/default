@@ -1,0 +1,10 @@
+#!/bin/env bash
+
+default-path "`pwd`"
+
+pane
+pane
+pane
+pane
+pane
+pane
