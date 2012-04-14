@@ -1,7 +1,6 @@
 # tmux + unix = tmunix
 
-Tool for managing predefined tmux sessions and windows with using only
-basic unix tools.
+Manage tmux windows with power of unix tools.
 
 ### Motivation
 
@@ -73,3 +72,8 @@ tmunix provides some commands you can use in the config files:
 * `tiled-layout` - set tiled layout
 * `horizontal-layout` - set horizontal layout
 * `vertical-layout` - set vertical layout
+
+### License
+
+MIT
+http://www.opensource.org/licenses/MIT
