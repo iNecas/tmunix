@@ -60,7 +60,18 @@ tmunix -w temporary -c 2panes -t
 See `tmunix -h` for more options
 
 You can also define functions or alises in your `~/.bashrc` to predefine
-often used commands.
+often used commands. Such as:
+
+``` bash
+TMUNIX_CMD=~/Projects/tmunix/tmunix
+function tx(){
+  if [ -z $2 ]; then
+    $TMUNIX_CMD -w $1
+  else
+    $TMUNIX_CMD -w $1 -n $2
+  fi
+}
+```
 
 ### Predefined config functions
 
