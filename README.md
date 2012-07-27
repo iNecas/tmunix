@@ -21,7 +21,7 @@ config file is just an ordinary bash script with some predefined
 functions (read further for details). Here is an example:
 
 ``` bash
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # this path will be used in all the panes of this window
 default-path /path/to/my_project

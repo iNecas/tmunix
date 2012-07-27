@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 function default-path(){
   DEFAULT_PATH="$1"
