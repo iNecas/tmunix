@@ -6,7 +6,7 @@ tmunix - tmux window manager
 
 Usage:
 tmunix [options]
-  -w WINDOW_NAME   - windows name (required)
+  -w WINDOW_NAME   - windows name (default value is default)
   -n WINDOW_NUMBER - number the window should be on
   -t               - use this window instead of creating new
   -c CONFIG_FILE   - profile file to be used for setting up the window. The
