@@ -34,8 +34,7 @@ while getopts "dthw:n:c:" opt; do
 done
 
 if [ -z $WINDOW ]; then
-  echo "Name must be specified"
-  exit 1
+  WINDOW='default'
 fi
 
 CONFIG_DIR=~/.tmunix
